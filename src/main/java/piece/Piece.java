@@ -5,6 +5,7 @@ import main.Board;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class Piece {
@@ -25,7 +26,7 @@ public class Piece {
     public BufferedImage getImage(String imagePath){
         BufferedImage bufferedImage = null;
         try {
-            image = ImageIO.read(getClass().getResourceAsStream(imagePath));
+            image = ImageIO.read(new File(imagePath));
         }
         catch (IOException e){
             e.printStackTrace();

@@ -11,7 +11,14 @@ public class GamePanel extends JPanel implements Runnable{
     public static final int HEIGHT = 800;
     final int FPS = 60;
     Thread gameThread;
+
+    //instantiate the components
     Board board = new Board();
+    Mouse mouse = new Mouse();
+
+
+
+
     //pieces management
     public ArrayList<Piece> pieces = new ArrayList<>();
     public ArrayList<Piece> simPieces = new ArrayList<>();
@@ -71,6 +78,12 @@ public class GamePanel extends JPanel implements Runnable{
     public GamePanel(){
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setBackground(Color.BLACK);
+
+        //adding mouse listeners
+        addMouseListener(mouse);
+        addMouseMotionListener(mouse);
+
+
         setPieces();
         copyPieces(pieces,simPieces);
     }
