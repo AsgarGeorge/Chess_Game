@@ -1,6 +1,7 @@
 package piece;
 
 import main.GamePanel;
+import main.Main;
 
 public class King extends Piece{
 
@@ -13,5 +14,16 @@ public class King extends Piece{
         else{
             image = getImage("src/main/resources/b-king.png");
         }
+    }
+
+    @Override
+    public boolean canMove(int targetCol, int targetRow) {
+        if(isWithinBoard(targetCol,targetRow)){
+            if(Math.abs(targetCol - preCol)+ Math.abs(targetRow - preRow) == 1 || Math.abs(targetCol - preCol)* Math.abs(targetRow - preRow) ==1){
+                return true;
+            }
+            else return false;
+        }
+        return false;
     }
 }

@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
         pieces.add(new Bishop(2,7,WHITE));
         pieces.add(new Bishop(5,7,WHITE));
         pieces.add(new Queen(3,7,WHITE));
-        pieces.add(new King(4,7,WHITE));
+        pieces.add(new King(4,4,WHITE));
 
         //setting up the black pieces
         pieces.add(new Pawn(0,1,BLACK));
@@ -75,6 +75,10 @@ public class GamePanel extends JPanel implements Runnable{
     public static final int WHITE = 0;
     public static final int BLACK = 1;
     int currentColor = WHITE;
+
+    //Booleans
+    boolean canMove;
+    boolean validateSquare;
 
     public GamePanel(){
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -134,42 +138,59 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         if(mouse.pressed == false) {
-            if(activeP != null){
-                activeP.updatePosition();
-                activeP = null;
+            if (activeP != null) {
+
+                if (validateSquare) {
+                    activeP.updatePosition();
+                }
+                else{
+                    activeP.resetPosition()
+;                    activeP = null;
+                }
+
             }
 
+        }
+    }
+
+    public void simulate(){
+
+        canMove = false;
+        validateSquare = false;
+
+        // if a piece is held , update its position
+        activeP.x = (mouse.x - Board.HALF_SQUARE_SIZE);
+        activeP.y = (mouse.y - Board.HALF_SQUARE_SIZE);
+        activeP.col = activeP.getCol(activeP.x);
+        activeP.row = activeP.getRow(activeP.y);
+
+        // check if the piece is hovering over a reachable square
+        if(activeP.canMove(activeP.col,activeP.row)){
+            canMove = true;
+            validateSquare = true;
         }
 
 
     }
-
-    public void simulate(){
-        activeP.setX(mouse.x - Board.HALF_SQUARE_SIZE);
-        activeP.setY(mouse.y - Board.HALF_SQUARE_SIZE);
-        activeP.col = activeP.getCol(activeP.x);
-        activeP.row = activeP.getRow(activeP.y);
-
-
-    }
-    public void paintComponent(Graphics graphics){
+    public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
         Graphics2D g2 = (Graphics2D) graphics;
         board.draw(g2);
-        for(Piece p : simPieces){
+        for (Piece p : simPieces) {
             p.draw(g2);
         }
-        if(activeP != null){
-            g2.setColor(Color.white);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.7f));
-            g2.fillRect(activeP.col*Board.SQUARE_SIZE,activeP.row*Board.SQUARE_SIZE,Board.SQUARE_SIZE,Board.SQUARE_SIZE);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
-            activeP.draw(g2);
+        if (activeP != null) {
+            if (canMove) {
+                g2.setColor(Color.white);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+                g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE, Board.SQUARE_SIZE);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                activeP.draw(g2);
+            }
+
+
         }
-
-
     }
-
 
 }
