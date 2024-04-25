@@ -12,4 +12,15 @@ public class Bishop extends Piece{
             image = getImage("src/main/resources/b-bishop.png");
         }
     }
+
+    @Override
+    public boolean canMove(int targetCol, int targetRow) {
+        if(isWithinBoard(targetCol,targetRow) && isSameSquare(targetCol,targetRow) == false){
+            if(targetCol )
+        }
+
+
+
+        return false;
+    }
 }
