@@ -17,11 +17,12 @@ public class GamePanel extends JPanel implements Runnable{
     Mouse mouse = new Mouse();
 
 
-
-
     //pieces management
     public ArrayList<Piece> pieces = new ArrayList<>();
     public ArrayList<Piece> simPieces = new ArrayList<>();
+    Piece activeP ;
+
+
 
     public void setPieces(){
 
@@ -80,8 +81,9 @@ public class GamePanel extends JPanel implements Runnable{
         setBackground(Color.BLACK);
 
         //adding mouse listeners
-        addMouseListener(mouse);
+
         addMouseMotionListener(mouse);
+        addMouseListener(mouse);
 
 
         setPieces();
@@ -108,6 +110,7 @@ public class GamePanel extends JPanel implements Runnable{
             if(delta >= 1) {
                 update();
                 repaint();
+
                 delta--;
 
             }
@@ -116,7 +119,37 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     private void update(){
-        System.out.println("update");
+
+        if(mouse.pressed){
+            if(activeP == null){
+                for (Piece piece:simPieces){
+                    if(piece.color==currentColor && piece.col == mouse.x/board.SQUARE_SIZE && piece.row == mouse.y/board.SQUARE_SIZE){
+                        activeP = piece;
+                    }
+                }
+            }
+            else {
+                // if a player is holding the piece , we need to simulate
+                simulate();
+            }
+        }
+        if(mouse.pressed == false) {
+            if(activeP != null){
+                activeP.updatePosition();
+                activeP = null;
+            }
+
+        }
+
+
+    }
+
+    public void simulate(){
+        activeP.setX(mouse.x - Board.HALF_SQUARE_SIZE);
+        activeP.setY(mouse.y - Board.HALF_SQUARE_SIZE);
+        activeP.col = activeP.getCol(activeP.x);
+        activeP.row = activeP.getRow(activeP.y);
+
 
     }
     public void paintComponent(Graphics graphics){
@@ -126,6 +159,13 @@ public class GamePanel extends JPanel implements Runnable{
         board.draw(g2);
         for(Piece p : simPieces){
             p.draw(g2);
+        }
+        if(activeP != null){
+            g2.setColor(Color.white);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.7f));
+            g2.fillRect(activeP.col*Board.SQUARE_SIZE,activeP.row*Board.SQUARE_SIZE,Board.SQUARE_SIZE,Board.SQUARE_SIZE);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
+            activeP.draw(g2);
         }
 
 

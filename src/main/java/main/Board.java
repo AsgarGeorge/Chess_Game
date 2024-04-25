@@ -13,11 +13,11 @@ public class Board {
         for (int row = 0; row < MAX_ROW; row++) {
             for (int col = 0; col < MAX_COL; col++) {
                 if(c == 0){
-                    g2.setColor(new Color(96,96,96));
+                    g2.setColor(new Color(0,204,102));
                     c=1;
                 }
                 else{
-                    g2.setColor(new Color(224,224,224));
+                    g2.setColor(new Color(96,96,96));
                     c=0;
                 }
                 g2.fillRect(col*SQUARE_SIZE,row*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE);
