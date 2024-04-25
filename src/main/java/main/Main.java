@@ -18,6 +18,5 @@ public class Main {
 
         //starting the game
         gp.launchGame();
-        System.out.println("helllo");
     }
 }
