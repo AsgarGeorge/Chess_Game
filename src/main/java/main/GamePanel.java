@@ -19,7 +19,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //pieces management
     public ArrayList<Piece> pieces = new ArrayList<>();
-    public ArrayList<Piece> simPieces = new ArrayList<>();
+    public static ArrayList<Piece> simPieces = new ArrayList<>();
     Piece activeP ;
 
 
@@ -38,12 +38,12 @@ public class GamePanel extends JPanel implements Runnable{
         pieces.add(new Pawn(7,6,WHITE));
         pieces.add(new Knight(1,7,WHITE));
         pieces.add(new Knight(6,7,WHITE));
-        pieces.add(new Rook(7,7,WHITE));
+        pieces.add(new Rook(4,4,WHITE));
         pieces.add(new Rook(0,7,WHITE));
         pieces.add(new Bishop(2,7,WHITE));
         pieces.add(new Bishop(5,7,WHITE));
         pieces.add(new Queen(3,7,WHITE));
-        pieces.add(new King(4,4,WHITE));
+        pieces.add(new King(4,7,WHITE));
 
         //setting up the black pieces
         pieces.add(new Pawn(0,1,BLACK));
@@ -141,9 +141,11 @@ public class GamePanel extends JPanel implements Runnable{
             if (activeP != null) {
 
                 if (validateSquare) {
+                    copyPieces(simPieces,pieces);
                     activeP.updatePosition();
                 }
                 else{
+                    copyPieces(pieces,simPieces);
                     activeP.resetPosition()
 ;                    activeP = null;
                 }
@@ -157,6 +159,8 @@ public class GamePanel extends JPanel implements Runnable{
 
         canMove = false;
         validateSquare = false;
+        //Reset the simPieces in every loop
+        copyPieces(pieces,simPieces);
 
         // if a piece is held , update its position
         activeP.x = (mouse.x - Board.HALF_SQUARE_SIZE);
@@ -167,6 +171,9 @@ public class GamePanel extends JPanel implements Runnable{
         // check if the piece is hovering over a reachable square
         if(activeP.canMove(activeP.col,activeP.row)){
             canMove = true;
+            if(activeP.hittingP != null){
+                simPieces.remove(activeP.hittingP.getIndex());
+            }
             validateSquare = true;
         }
 

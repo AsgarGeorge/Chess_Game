@@ -1,6 +1,7 @@
 package piece;
 
 import main.Board;
+import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,6 +14,7 @@ public class Piece {
     public int x,y ;
     public int col, row, preCol, preRow;
     public int color;
+    public Piece hittingP;
 
     public Piece(int col, int row, int color) {
         this.col = col;
@@ -37,6 +39,20 @@ public class Piece {
     public int getRow(int y){
         return (y + Board.HALF_SQUARE_SIZE)/Board.SQUARE_SIZE;
     }
+    public int getIndex(){
+        for (int index = 0; index < GamePanel.simPieces.size(); index++) {
+            if(GamePanel.simPieces.get(index) == this){
+                return index;
+            }
+        }
+        return 0;
+    }
+
+
+
+
+
+
 
     //Method related with the Graphics w.r.t to the pieces
     public BufferedImage getImage(String imagePath){
@@ -79,6 +95,35 @@ public class Piece {
     public boolean isWithinBoard(int targetCol,int targetRow){
         if(targetRow >= 0&& targetRow <=7 && targetCol <= 7 && targetCol >= 0){
             return true;
+        }
+        return false;
+    }
+    public boolean isSameSquare(int targetCol,int targetRow){
+        if(targetCol == preCol && targetRow == preRow){
+            return true;
+        }
+        return false;
+    }
+
+    public Piece getHittingP(int targetCol, int targetRow){
+        for(Piece piece :GamePanel.simPieces){
+            if(piece.col == targetCol && piece.row == targetRow && piece != this){
+                return piece;
+            }
+        }
+        return null;
+    }
+    public boolean isValidSquare(int targetCol, int targetRow){
+
+        hittingP = getHittingP(targetCol,targetRow);
+        if(hittingP == null) {
+            return true;
+        }
+        else{
+            if(hittingP.color != this.color){
+                return true;
+            }
+            else hittingP = null;
         }
         return false;
     }

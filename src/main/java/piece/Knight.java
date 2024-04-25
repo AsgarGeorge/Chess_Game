@@ -1,6 +1,7 @@
 package piece;
 
 import main.GamePanel;
+import main.Main;
 
 public class Knight extends Piece{
 
@@ -13,5 +14,17 @@ public class Knight extends Piece{
         else{
             image = getImage("src/main/resources/b-knight.png");
         }
+    }
+
+    public boolean canMove(int targetCol,int targetRow){
+        if(isWithinBoard(targetCol,targetRow)){
+            if(Math.abs(targetCol - preCol)*Math.abs(targetRow - preRow) ==2){
+                if(isValidSquare(targetCol,targetRow)){
+                    return true;
+
+                }
+            }
+        }
+        return false;
     }
 }
