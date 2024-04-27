@@ -13,4 +13,21 @@ public class Pawn extends Piece{
             image = getImage("src/main/resources/b-pawn.png");
         }
     }
+
+    @Override
+    public boolean canMove(int targetCol, int targetRow) {
+        if(isWithinBoard(targetCol,targetRow) && isSameSquare(targetCol,targetRow) == false){
+            int moveValue;
+            if(color == GamePanel.WHITE){
+                moveValue = -1;
+            }
+            else{ moveValue = 1;}
+
+            hittingP = getHittingP(targetCol,targetRow);
+            if(targetCol == preCol && targetRow == preRow + moveValue && hittingP ==null){
+                return true;
+            }
+        }
+        return false;
+    }
 }
