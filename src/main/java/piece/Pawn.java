@@ -27,6 +27,13 @@ public class Pawn extends Piece{
             if(targetCol == preCol && targetRow == preRow + moveValue && hittingP ==null){
                 return true;
             }
+            if(targetCol == preCol && targetRow == preRow + moveValue*2 && hittingP ==null && moved ==false  && pieceIsOnStraightLine(targetCol,targetRow) == false){
+                return true;
+            }
+            if(Math.abs(targetCol - preCol)==1 && targetRow == preRow + moveValue && hittingP != null && hittingP.color != this.color){
+                return true;
+
+            }
         }
         return false;
     }
