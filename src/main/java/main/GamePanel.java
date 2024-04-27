@@ -141,10 +141,15 @@ public class GamePanel extends JPanel implements Runnable{
             if (activeP != null) {
 
                 if (validateSquare) {
+                    // the move which the player had has been confirmed
+
                     copyPieces(simPieces,pieces);
                     activeP.updatePosition();
+                    changePlayer();
                 }
                 else{
+                    // the move is not confirmed
+
                     copyPieces(pieces,simPieces);
                     activeP.resetPosition()
 ;                    activeP = null;
@@ -178,6 +183,13 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
 
+    }
+    private void changePlayer(){
+        if(currentColor == WHITE){
+            currentColor = BLACK;
+        }
+        else currentColor = WHITE;
+        activeP = null;
     }
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
