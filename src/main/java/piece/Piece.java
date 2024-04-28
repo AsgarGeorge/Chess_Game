@@ -107,6 +107,7 @@ public class Piece {
         return false;
     }
 
+    //method for checking any obstacle before the movement
     public Piece getHittingP(int targetCol, int targetRow){
         for(Piece piece :GamePanel.simPieces){
             if(piece.col == targetCol && piece.row == targetRow && piece != this){
