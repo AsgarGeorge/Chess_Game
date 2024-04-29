@@ -37,13 +37,13 @@ public class GamePanel extends JPanel implements Runnable{
         pieces.add(new Pawn(5,6,WHITE));
         pieces.add(new Pawn(6,6,WHITE));
         pieces.add(new Pawn(7,6,WHITE));
-        pieces.add(new Knight(1,7,WHITE));
-        pieces.add(new Knight(6,7,WHITE));
+//        pieces.add(new Knight(1,7,WHITE));
+//        pieces.add(new Knight(6,7,WHITE));
         pieces.add(new Rook(7,7,WHITE));
         pieces.add(new Rook(0,7,WHITE));
-        pieces.add(new Bishop(2,7,WHITE));
-        pieces.add(new Bishop(5,7,WHITE));
-        pieces.add(new Queen(3,7,WHITE));
+//        pieces.add(new Bishop(2,7,WHITE));
+//        pieces.add(new Bishop(5,7,WHITE));
+//        pieces.add(new Queen(3,7,WHITE));
         pieces.add(new King(4,7,WHITE));
 
         //setting up the black pieces
@@ -147,6 +147,9 @@ public class GamePanel extends JPanel implements Runnable{
 
                     copyPieces(simPieces,pieces);
                     activeP.updatePosition();
+                    if(castlingP != null){
+                        castlingP.updatePosition();
+                    }
                     changePlayer();
                 }
                 else{
@@ -169,6 +172,16 @@ public class GamePanel extends JPanel implements Runnable{
         //Reset the simPieces in every loop
         copyPieces(pieces,simPieces);
 
+        if(castlingP != null){
+            castlingP.col = castlingP.preCol;
+            castlingP.x = castlingP.getX(castlingP.col);
+            castlingP = null;
+        }
+
+
+
+
+
         // if a piece is held , update its position
         activeP.x = (mouse.x - Board.HALF_SQUARE_SIZE);
         activeP.y = (mouse.y - Board.HALF_SQUARE_SIZE);
@@ -181,10 +194,23 @@ public class GamePanel extends JPanel implements Runnable{
             if(activeP.hittingP != null){
                 simPieces.remove(activeP.hittingP.getIndex());
             }
+            checkCastling();
             validateSquare = true;
         }
 
 
+    }
+
+    private void checkCastling(){
+        if(castlingP != null){
+            if(castlingP.col == 0){
+                castlingP.col = castlingP.col +3;
+            }
+            else if (castlingP.col == 7){
+                castlingP.col = castlingP.col - 2;
+            }
+            castlingP.x = castlingP.getX(castlingP.col);
+        }
     }
     private void changePlayer(){
         if(currentColor == WHITE){

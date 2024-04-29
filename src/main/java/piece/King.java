@@ -30,6 +30,7 @@ public class King extends Piece {
                 if (targetCol == preCol + 2 && targetRow == preRow && pieceIsOnStraightLine(targetCol, targetRow) == false) {
                     for(Piece piece : GamePanel.simPieces){
                         if(piece.col == preCol +3 && piece.row == preRow && piece.moved == false){
+                            GamePanel.castlingP = piece;
                             return true;
                         }
                     }
@@ -44,7 +45,7 @@ public class King extends Piece {
                         if(piece.col == preCol - 4 && piece.row == targetRow){
                             p[1] = piece;
                         }
-                        if(p[0] == null && p[1].moved == false){
+                        if(p[0] == null && p[1] != null &&p[1].moved == false){
                             GamePanel.castlingP = p[1];
                             return true;
                         }
