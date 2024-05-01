@@ -37,13 +37,13 @@ public class GamePanel extends JPanel implements Runnable{
         pieces.add(new Pawn(5,6,WHITE));
         pieces.add(new Pawn(6,6,WHITE));
         pieces.add(new Pawn(7,6,WHITE));
-//        pieces.add(new Knight(1,7,WHITE));
-//        pieces.add(new Knight(6,7,WHITE));
+        pieces.add(new Knight(1,7,WHITE));
+        pieces.add(new Knight(6,7,WHITE));
         pieces.add(new Rook(7,7,WHITE));
         pieces.add(new Rook(0,7,WHITE));
-//        pieces.add(new Bishop(2,7,WHITE));
-//        pieces.add(new Bishop(5,7,WHITE));
-//        pieces.add(new Queen(3,7,WHITE));
+        pieces.add(new Bishop(2,7,WHITE));
+        pieces.add(new Bishop(5,7,WHITE));
+        pieces.add(new Queen(3,7,WHITE));
         pieces.add(new King(4,7,WHITE));
 
         //setting up the black pieces
@@ -233,11 +233,22 @@ public class GamePanel extends JPanel implements Runnable{
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
                 g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE, Board.SQUARE_SIZE);
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                activeP.draw(g2);
             }
+            activeP.draw(g2);
+
 
 
         }
+        //g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setFont(new Font("Hack Nerd Font", Font.PLAIN,30));
+        g2.setColor(Color.white);
+
+        if(currentColor == WHITE){
+            g2.drawString("White's Turn",840,550);
+        }else {
+            g2.drawString("Black's Turn", 840 , 250);
+        }
+
     }
 
 }
