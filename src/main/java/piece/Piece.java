@@ -18,7 +18,7 @@ public class Piece {
     public int col, row, preCol, preRow;
     public int color;
     public Piece hittingP;
-    public boolean moved;
+    public boolean moved , twoStepped;
 
     public Piece(int col, int row, int color) {
         this.col = col;
@@ -77,6 +77,12 @@ public class Piece {
 
     //Methods for updating position once the piece has been moved
     public void updatePosition() {
+
+        if(type == Type.PAWN){
+            if(Math.abs(row - preRow) == 2){
+                twoStepped = true;
+            }
+        }
         x = getX(col);
         y = getY(row);
 

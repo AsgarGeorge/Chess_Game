@@ -35,7 +35,15 @@ public class Pawn extends Piece{
             }
             if(Math.abs(targetCol - preCol)==1 && targetRow == preRow + moveValue && hittingP != null && hittingP.color != this.color){
                 return true;
-
+            }
+            // movement of En-passant
+            if(Math.abs(targetCol - preCol) == 1 && targetRow == preRow + moveValue){
+                for(Piece p : GamePanel.simPieces){
+                    if(p.row == preRow && p.col == targetCol && p.twoStepped == true){
+                        hittingP = p;
+                        return true;
+                    }
+                }
             }
         }
         return false;
