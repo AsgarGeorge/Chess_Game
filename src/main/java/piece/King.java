@@ -2,12 +2,14 @@ package piece;
 
 import main.GamePanel;
 import main.Main;
+import main.Type;
 
 public class King extends Piece {
 
     public King(int col, int row, int color) {
         super(col, row, color);
 
+        type = Type.KING;
         if (color == GamePanel.WHITE) {
             image = getImage("src/main/resources/w-king.png");
         } else {
