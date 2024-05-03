@@ -20,14 +20,20 @@ public class GamePanel extends JPanel implements Runnable{
     //pieces management
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
-    ArrayList<Piece> promoPieces = new ArrayList<>();
+    public static ArrayList<Piece> promoPieces = new ArrayList<>();
+
 
     Piece activeP ;
     public static Piece castlingP;
 
 
+    public void test(){
+        pieces.add(new Pawn(0,1,WHITE));
+        pieces.add(new Pawn(4,1,BLACK));
 
+    }
     public void setPieces(){
+
 
         //setting up the white pieces
 
@@ -88,13 +94,14 @@ public class GamePanel extends JPanel implements Runnable{
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setBackground(Color.BLACK);
 
-        //adding mouse listeners
 
+        //adding mouse listeners
         addMouseMotionListener(mouse);
         addMouseListener(mouse);
 
 
-        setPieces();
+        //setPieces();
+        test();
         copyPieces(pieces,simPieces);
     }
     public void launchGame(){
@@ -121,7 +128,6 @@ public class GamePanel extends JPanel implements Runnable{
                 repaint();
 
                 delta--;
-
             }
         }
 
@@ -129,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     private void update(){
         if(promotion){
-            promoting();
+            //promoting();
         }
         else {
 
@@ -158,7 +164,6 @@ public class GamePanel extends JPanel implements Runnable{
                         }
 
                         if (canPromote()) {
-
                             promotion = true;
                         } else {
                             changePlayer();
@@ -249,16 +254,15 @@ public class GamePanel extends JPanel implements Runnable{
         if(activeP.type == Type.PAWN){
             if(currentColor == WHITE && activeP.row == 0 || currentColor == BLACK && activeP.row == 7){
                 promoPieces.clear();
-                promoPieces.add(new Rook(currentColor,9,2));
-                promoPieces.add(new Bishop(currentColor,9,3));
-                promoPieces.add(new Knight(currentColor,9,4));
-                promoPieces.add(new Queen(currentColor,9,5));
+                promoPieces.add(new Rook(9,2,currentColor));
+                promoPieces.add(new Bishop(9,3,currentColor));
+                promoPieces.add(new Knight(9,4,currentColor));
+                promoPieces.add(new Queen(9,5,currentColor));
+                System.out.println("adding pieces");
                 return true;
             }
         }
         return false;
-
-
 
     }
 
@@ -270,9 +274,7 @@ public class GamePanel extends JPanel implements Runnable{
         for (Piece p : simPieces) {
             p.draw(g2);
         }
-//        for(Piece p:promoPieces){
-//            p.draw(g2);
-//        }
+
         if (activeP != null) {
             if (canMove) {
                 g2.setColor(Color.white);
@@ -281,24 +283,33 @@ public class GamePanel extends JPanel implements Runnable{
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
             }
             activeP.draw(g2);
-
-
-
         }
+
+
+
+
         //g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setFont(new Font("Hack Nerd Font", Font.PLAIN,30));
         g2.setColor(Color.white);
 
-        if(currentColor == WHITE){
-            g2.drawString("White's Turn",840,550);
-        }else {
-            g2.drawString("Black's Turn", 840 , 250);
-        }
+
 
         if(promotion){
             g2.drawString("Promote to :",840,150);
-            for (Piece p:promoPieces){
-                g2.drawImage(p.image,p.getX(p.col),p.getY(p.row),Board.SQUARE_SIZE,Board.SQUARE_SIZE,null);
+
+            for (Piece p :promoPieces){
+                //g2.drawImage(p.image,p.getX(p.col),p.getY(p.row),Board.SQUARE_SIZE,Board.SQUARE_SIZE,null);
+                //System.out.println("drawing pieces");
+
+                p.draw(g2);
+                //System.out.println("after");
+            }
+//
+        }else{
+            if(currentColor == WHITE){
+                g2.drawString("White's Turn",840,550);
+            }else {
+                g2.drawString("Black's Turn", 840 , 250);
             }
         }
 
