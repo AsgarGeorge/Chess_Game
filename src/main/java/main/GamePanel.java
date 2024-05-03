@@ -135,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     private void update(){
         if(promotion){
-            //promoting();
+            promoting();
         }
         else {
 
@@ -263,6 +263,31 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         return false;
+
+    }
+    private void promoting(){
+        if(mouse.pressed){
+            for(Piece piece : promoPieces){
+                if(piece.col == mouse.x/Board.SQUARE_SIZE && piece.row == mouse.y/Board.SQUARE_SIZE){
+                    switch (piece.type){
+                        case ROOK: simPieces.add(new Rook(activeP.col,activeP.row,currentColor));
+                        break;
+                        case BISHOP:simPieces.add(new Bishop(activeP.col,activeP.row,currentColor));
+                        break;
+                        case KNIGHT:simPieces.add(new Knight(activeP.col,activeP.row,currentColor));
+                        break;
+                        case QUEEN:simPieces.add(new Queen(activeP.col,activeP.row,currentColor));
+                        break;
+                        default:break;
+                    }
+                    simPieces.remove(activeP.getIndex());
+                    copyPieces(simPieces,pieces);
+                    activeP = null;
+                    promotion = false;
+                    changePlayer();
+                }
+            }
+        }
 
     }
 
