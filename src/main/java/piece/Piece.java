@@ -227,12 +227,5 @@ public class Piece {
         return false;
     }
 
-//    public boolean isIlleagalMove(int targetCol,int targetRow){
-//        if(pieceIsOnDiagonal(targetCol,targetCol)|| pieceIsOnDiagonal(targetCol,targetRow)){
-//            if(hittingP.type == Type.QUEEN|| hittingP.type == Type.BISHOP ||hittingP.type == Type.ROOK )
-//
-//        }
-//    }
-
 }
 

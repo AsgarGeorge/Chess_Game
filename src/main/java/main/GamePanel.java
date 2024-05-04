@@ -30,6 +30,10 @@ public class GamePanel extends JPanel implements Runnable{
     public void test(){
         pieces.add(new Pawn(0,1,WHITE));
         pieces.add(new Pawn(4,1,BLACK));
+        pieces.add(new King(3,7,WHITE));
+        pieces.add(new King(0,3,BLACK));
+        pieces.add(new Bishop(1,4,BLACK));
+        pieces.add(new Queen(4,5,BLACK));
 
     }
     public void setPieces(){
@@ -213,10 +217,24 @@ public class GamePanel extends JPanel implements Runnable{
                 simPieces.remove(activeP.hittingP.getIndex());
             }
             checkCastling();
+            if(isIllegal(activeP) == false){
+                validateSquare = true;
+            }
             validateSquare = true;
         }
 
 
+    }
+
+    private boolean isIllegal(Piece king) {
+        if(king.type == Type.KING){
+            for(Piece piece : simPieces){
+                if(piece.type != Type.KING && king.color != piece.color && piece.canMove(king.col, king.row)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void checkCastling(){
@@ -258,7 +276,7 @@ public class GamePanel extends JPanel implements Runnable{
                 promoPieces.add(new Bishop(9,3,currentColor));
                 promoPieces.add(new Knight(9,4,currentColor));
                 promoPieces.add(new Queen(9,5,currentColor));
-                System.out.println("adding pieces");
+                //System.out.println("adding pieces");
                 return true;
             }
         }
@@ -302,12 +320,20 @@ public class GamePanel extends JPanel implements Runnable{
 
         if (activeP != null) {
             if (canMove) {
-                g2.setColor(Color.white);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-                g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE, Board.SQUARE_SIZE);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                if (isIllegal(activeP)) {
+                    g2.setColor(Color.YELLOW);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+                    g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE, Board.SQUARE_SIZE);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                } else {
+                    g2.setColor(Color.white);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+                    g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE, Board.SQUARE_SIZE);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                }
             }
             activeP.draw(g2);
+
         }
 
 

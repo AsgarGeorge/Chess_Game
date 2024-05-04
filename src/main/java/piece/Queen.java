@@ -23,7 +23,9 @@ public class Queen extends Piece{
 
             if( targetCol == preCol || targetRow == preRow){
                 if (isValidSquare(targetCol, targetRow) && pieceIsOnStraightLine(targetCol, targetRow) == false) {
+                    //System.out.println("queen moving");
                     return true;
+
                 }
             }
 
