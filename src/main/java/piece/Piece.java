@@ -53,11 +53,6 @@ public class Piece {
     }
 
 
-
-
-
-
-
     //Method related with the Graphics w.r.t to the pieces
     public BufferedImage getImage(String imagePath){
         BufferedImage bufferedImage = null;
@@ -73,6 +68,8 @@ public class Piece {
     public void draw(Graphics2D g2) {
         g2.drawImage(image,x,y,Board.SQUARE_SIZE,Board.SQUARE_SIZE,null);
     }
+
+
 
 
     //Methods for updating position once the piece has been moved
@@ -229,6 +226,13 @@ public class Piece {
         }
         return false;
     }
+
+//    public boolean isIlleagalMove(int targetCol,int targetRow){
+//        if(pieceIsOnDiagonal(targetCol,targetCol)|| pieceIsOnDiagonal(targetCol,targetRow)){
+//            if(hittingP.type == Type.QUEEN|| hittingP.type == Type.BISHOP ||hittingP.type == Type.ROOK )
+//
+//        }
+//    }
 
 }
 
