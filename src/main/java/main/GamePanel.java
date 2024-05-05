@@ -104,8 +104,8 @@ public class GamePanel extends JPanel implements Runnable{
         addMouseListener(mouse);
 
 
-        //setPieces();
-        test();
+        setPieces();
+        //test();
         copyPieces(pieces,simPieces);
     }
     public void launchGame(){
