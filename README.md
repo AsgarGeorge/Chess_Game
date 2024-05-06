@@ -42,6 +42,49 @@ the update and repaint method should run every 1/60 of the second to get the fra
             }
         }
     }
+ ```
+## Run Locally
 
+Clone the project
+
+```bash
+  git clone https://github.com/AsgarGeorge/Chess_Game.git
 ```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Run application
+
+```bash
+run Main.java
+```
+
+
+
+## Future improvements
+
+- make it online playable
+- multiple game modes like chess 360
+- connect to AI chess bots
+- multiple themes
+
+
+## Acknowledgements
+
+- the game is built by watching [@RyiSnow](https://www.youtube.com/@RyiSnow)
+
+## Contributing
+
+Contributions are always welcome!
+
+feel free to contribute, if intrested built related from the future improvements section.
+
+## Feedback
+
+If you have any feedback,or doubt related to code. please reach out to us at asgarantony@gmail.com
+
 
