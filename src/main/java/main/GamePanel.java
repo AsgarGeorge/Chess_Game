@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable{
     public static ArrayList<Piece> promoPieces = new ArrayList<>();
 
 
-    Piece activeP ;
+    Piece activeP , checkingP;
     public static Piece castlingP;
 
 
@@ -93,6 +93,7 @@ public class GamePanel extends JPanel implements Runnable{
     boolean canMove;
     boolean validateSquare;
     boolean promotion;
+    boolean gameOver;
 
     public GamePanel(){
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -165,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable{
                         if (castlingP != null) {
                             castlingP.updatePosition();
                         }
-                        if(isKingInCheck){
+                        if(isKingInCheck()){
 
                         }
                         else{if (canPromote()) {
@@ -241,6 +242,15 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     private boolean isKingInCheck(){
+        Piece King = getKing(true);
+        if(activeP.canMove(King.col,King.row)){
+            checkingP = activeP;
+            return true;
+        }
+        else{
+            checkingP = null;
+        }
+
         return false;
     }
     private Piece getKing(boolean opponent){
