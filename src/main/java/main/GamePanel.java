@@ -165,12 +165,16 @@ public class GamePanel extends JPanel implements Runnable{
                         if (castlingP != null) {
                             castlingP.updatePosition();
                         }
+                        if(isKingInCheck){
 
-                        if (canPromote()) {
+                        }
+                        else{if (canPromote()) {
                             promotion = true;
                         } else {
                             changePlayer();
-                        }
+                        }}
+
+
                     } else {
                         // the move is not confirmed
 
@@ -234,6 +238,25 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         return false;
+    }
+
+    private boolean isKingInCheck(){
+        return false;
+    }
+    private Piece getKing(boolean opponent){
+        Piece King = null;
+        for(Piece piece : simPieces){
+            if(opponent){
+                if(piece.type == Type.KING && piece.color != currentColor){
+                    King = piece;
+                }
+            }else{
+                if(piece.type == Type.KING && piece.color == currentColor){
+                    King = piece;
+                }
+            }
+        }
+        return King;
     }
 
     private void checkCastling(){
