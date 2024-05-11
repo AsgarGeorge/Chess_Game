@@ -23,7 +23,8 @@ public class GamePanel extends JPanel implements Runnable{
     public static ArrayList<Piece> promoPieces = new ArrayList<>();
 
 
-    Piece activeP , checkingP;
+    Piece activeP ;
+    Piece checkingP;
     public static Piece castlingP;
 
 
@@ -105,8 +106,8 @@ public class GamePanel extends JPanel implements Runnable{
         addMouseListener(mouse);
 
 
-        setPieces();
-        //test();
+        //setPieces();
+        test();
         copyPieces(pieces,simPieces);
     }
     public void launchGame(){
@@ -145,12 +146,14 @@ public class GamePanel extends JPanel implements Runnable{
 
             if (mouse.pressed) {
                 if (activeP == null) {
+
                     for (Piece piece : simPieces) {
                         if (piece.color == currentColor && piece.col == mouse.x / board.SQUARE_SIZE && piece.row == mouse.y / board.SQUARE_SIZE) {
                             activeP = piece;
                         }
                     }
                 } else {
+                    System.out.println("the piece is clicked");
                     // if a player is holding the piece , we need to simulate
                     simulate();
                 }
@@ -160,20 +163,24 @@ public class GamePanel extends JPanel implements Runnable{
 
                     if (validateSquare) {
                         // the move which the player had has been confirmed
-
                         copyPieces(simPieces, pieces);
                         activeP.updatePosition();
                         if (castlingP != null) {
                             castlingP.updatePosition();
                         }
-                        if(isKingInCheck()){
-
-                        }
-                        else{if (canPromote()) {
+//                        if(isKingInCheck()){
+//
+//                        }
+//                        else{if (canPromote()) {
+//                            promotion = true;
+//                        } else {
+//                            changePlayer();
+//                        }}
+                        if (canPromote()) {
                             promotion = true;
                         } else {
                             changePlayer();
-                        }}
+                        }
 
 
                     } else {
@@ -241,33 +248,33 @@ public class GamePanel extends JPanel implements Runnable{
         return false;
     }
 
-    private boolean isKingInCheck(){
-        Piece King = getKing(true);
-        if(activeP.canMove(King.col,King.row)){
-            checkingP = activeP;
-            return true;
-        }
-        else{
-            checkingP = null;
-        }
-
-        return false;
-    }
-    private Piece getKing(boolean opponent){
-        Piece King = null;
-        for(Piece piece : simPieces){
-            if(opponent){
-                if(piece.type == Type.KING && piece.color != currentColor){
-                    King = piece;
-                }
-            }else{
-                if(piece.type == Type.KING && piece.color == currentColor){
-                    King = piece;
-                }
-            }
-        }
-        return King;
-    }
+//    private boolean isKingInCheck(){
+//        Piece King = getKing(true);
+//        if(activeP.canMove(King.col,King.row)){
+//            checkingP = activeP;
+//            return true;
+//        }
+//        else{
+//            checkingP = null;
+//        }
+//
+//        return false;
+//    }
+//    private Piece getKing(boolean opponent){
+//        Piece King = null;
+//        for(Piece piece : simPieces){
+//            if(opponent){
+//                if(piece.type == Type.KING && piece.color != currentColor){
+//                    King = piece;
+//                }
+//            }else{
+//                if(piece.type == Type.KING && piece.color == currentColor){
+//                    King = piece;
+//                }
+//            }
+//        }
+//        return King;
+//    }
 
     private void checkCastling(){
         if(castlingP != null){
@@ -391,8 +398,19 @@ public class GamePanel extends JPanel implements Runnable{
         }else{
             if(currentColor == WHITE){
                 g2.drawString("White's Turn",840,550);
+
+//                if(checkingP != null && checkingP.color == BLACK){
+//                    g2.setColor(Color.RED);
+//                    g2.drawString("The King",840,650);
+//                    g2.drawString("is in check",840,700);
+//                }
             }else {
                 g2.drawString("Black's Turn", 840 , 250);
+//                if(checkingP != null && checkingP.color != BLACK){
+//                    g2.setColor(Color.RED);
+//                    g2.drawString("The King",840,100);
+//                    g2.drawString("is in check",840,150);
+//                }
             }
         }
 
