@@ -106,8 +106,8 @@ public class GamePanel extends JPanel implements Runnable{
         addMouseListener(mouse);
 
 
-        //setPieces();
-        test();
+        setPieces();
+        //test();
         copyPieces(pieces,simPieces);
     }
     public void launchGame(){
@@ -158,7 +158,7 @@ public class GamePanel extends JPanel implements Runnable{
                     simulate();
                 }
             }
-            if (mouse.pressed == false) {
+            if (!mouse.pressed) {
                 if (activeP != null) {
 
                     if (validateSquare) {
@@ -168,8 +168,9 @@ public class GamePanel extends JPanel implements Runnable{
                         if (castlingP != null) {
                             castlingP.updatePosition();
                         }
+
 //                        if(isKingInCheck()){
-//
+ //
 //                        }
 //                        else{if (canPromote()) {
 //                            promotion = true;

@@ -17,6 +17,6 @@ public class Main {
 
 
         //starting the game
-        //gp.launchGame();
+        gp.launchGame();
     }
 }
